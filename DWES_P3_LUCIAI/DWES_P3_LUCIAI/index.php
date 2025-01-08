@@ -1,67 +1,25 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Everlia</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Arial', sans-serif;
-      background-color: #fdf7f7;
-      color: #333;
-    }
-    .seccion1 {
-      background: url('./imagenBodaFondo.webp') no-repeat center center;
-      background-size: cover;
-      height: 600px;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-    .seccion h1 {
-      font-size: 3rem;
-    }
-    .btn-custom {
-      background-color: #ff6f61;
-      color: white;
-    }
-    .btn-custom:hover {
-      background-color: #e65c50;
-    }
-    .card img {
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .footer {
-      background-color: #333;
-      color: white;
-      padding: 20px 0;
-    }
-  </style>
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Everlia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="./views/estilo.css">
+    
+  </head>
 <body>
-  <!-- Menu  -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container">
-      <a class="navbar-brand" href="#">Everlia</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="#login">Iniciar Sesion</a></li>
-          <li class="nav-item"><a class="nav-link" href="#register">Registrarse</a></li>
-          <li class="nav-item"><a class="nav-link" href="#cart"> Carrito</a></li>
-          <li class="nav-item"><a class="nav-link" href="#shop"> Productos</a></li>
-          <li class="nav-item"><a class="nav-link" href="#trips"> Viajes</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <!-- Menú dinámico -->
+    <?php include_once "./views/menu.php"; ?>
+
+    <!-- Aquí iría el contenido principal de tu página -->
+    <main>
+        <!-- Copia aquí el contenido HTML de tu archivo original -->
+   
 
   <!-- seccion 1 -->
   <div class="seccion1">
@@ -80,7 +38,7 @@
       <div class="row g-4">
         <div class="col-md-4">
           <div class="card">
-            <img src="decoracion.jpg" class="card-img-top" alt="Product 1">
+            <img src="./imagenes/decoracion.jpg" class="card-img-top" alt="Product 1">
             <div class="card-body">
               <h5 class="card-title">Decoración </h5>
               <p class="card-text">Decora a tu gusto tu gran dia</p>
@@ -90,7 +48,7 @@
         </div>
         <div class="col-md-4">
           <div class="card">
-            <img src="./trajeBoda.jpg" class="card-img-top" alt="Product 2">
+            <img src="./imagenes/trajeBoda.jpg" class="card-img-top" alt="Product 2">
             <div class="card-body">
               <h5 class="card-title">Vestidos y Trajes</h5>
               <p class="card-text">Elija el vestido que mejor se adapte a ti</p>
@@ -100,7 +58,7 @@
         </div>
         <div class="col-md-4">
           <div class="card">
-            <img src="./ramoFlores.jpg" class="card-img-top" alt="Product 3">
+            <img src="./imagenes/ramoFlores.jpg" class="card-img-top" alt="Product 3">
             <div class="card-body">
               <h5 class="card-title">Ramos de flores</h5>
               <p class="card-text"> Elija entre nuestra amplia variedad de flores y colores</p>
@@ -120,21 +78,21 @@
           <div id="tripCarousel" class="carousel slide h-100" data-bs-ride="carousel">
             <div class="carousel-inner h-100">
               <div class="carousel-item active">
-                <img src="./BALI.jpeg" class="d-block w-100 h-100" alt="Viaje 1">
+                <img src="./imagenes/BALI.jpeg" class="d-block w-100 h-100" alt="Viaje 1">
                 <div class="carousel-caption d-none d-md-block">
                   <h5><strong>BALI (INDONESIA)</strong></h5>
                   <p><strong>Descubre sus arrecifes de coral y disfruta de su clima tropical</strong></p>
                 </div>
               </div>
               <div class="carousel-item">
-                <img src="./REPUBLICADOMINICANA.jpg" class="d-block w-100 h-100" alt="Viaje 2">
+                <img src="./imagenes/REPUBLICADOMINICANA.jpg" class="d-block w-100 h-100" alt="Viaje 2">
                 <div class="carousel-caption d-none d-md-block">
                   <h5><strong>REPÚBLICA DOMINICANA</strong></h5>
                   <p><strong>Relájate en sus magníficas playas de arena blanca y aguas cristalinas</strong></p>
                 </div>
               </div>
               <div class="carousel-item">
-                <img src="./ISLANDIA.jpg" class="d-block w-100 h-100" alt="Viaje 3">
+                <img src="./imagenes/ISLANDIA.jpg" class="d-block w-100 h-100" alt="Viaje 3">
                 <div class="carousel-caption d-none d-md-block">
                   <h5><strong>ISLANDIA</strong></h5>
                   <p><strong>Encuentra la paz que necesitas en sus impresionantes montañas y lagos</strong></p>
@@ -153,14 +111,10 @@
         </div>
       </section>
 
-  <!-- Footer -->
-  
-  <footer class="footer text-center">
-    <div class="container">
-      <p>&copy; Everlia. Derechos reservados </p>
-    </div>
-  </footer>
+   
+      </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Pie de página -->
+    <?php include_once "./views/pie.php"; ?>
 </body>
 </html>

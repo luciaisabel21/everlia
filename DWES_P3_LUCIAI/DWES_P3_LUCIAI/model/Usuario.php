@@ -37,6 +37,46 @@ class Usuario extends Persona {
         	$lista->eliminarInvitado($invitado);
     	}
 	}
+
+	/**
+	 * Get the value of genero
+	 */ 
+	public function getGenero()
+	{
+		return $this->genero;
+	}
+
+	/**
+	 * Set the value of genero
+	 *
+	 * @return  self
+	 */ 
+	public function setGenero($genero)
+	{
+		$this->genero = $genero;
+
+		return $this;
+	}
+
+	/**
+	 * Get the value of fechaRegistro
+	 */ 
+	public function getFechaRegistro()
+	{
+		return $this->fechaRegistro;
+	}
+
+	/**
+	 * Set the value of fechaRegistro
+	 *
+	 * @return  self
+	 */ 
+	public function setFechaRegistro($fechaRegistro)
+	{
+		$this->fechaRegistro = $fechaRegistro;
+
+		return $this;
+	}
 }
 
 ?>
