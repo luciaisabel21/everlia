@@ -79,7 +79,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Si no hay errores, registrar al usuario en la base de datos
     if (!$errores) {
         try {
-            insertarUsuario($id, $nombre, $email, $telefono, $pass, $genero, $fecha);
+            crearTablaPersona();
+            
             echo "<p>Registro exitoso. Bienvenido, $nombre.</p>";
         } catch (Exception $e) {
             echo "<p>Error al registrar: " . $e->getMessage() . "</p>";
