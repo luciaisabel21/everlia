@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
-    /* Lo de abajo: Consulta el campo tipo en la tabla persona.
+    /*Lo de abajo: Consulta el campo tipo en la tabla persona.
 Guarda el tipo en la sesión ($_SESSION["usuario_tipo"]).
 Redirige al usuario según su tipo:
 Los usuarios van a la página para gestionar su lista de bodas.
@@ -74,8 +74,10 @@ if (!$errores) {
 
     $stmt->close();
     $conexion->close();
+    
 }
 }
+
 ?>
 
 <?php include_once "./views/menu.php"; ?>

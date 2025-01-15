@@ -1,13 +1,16 @@
 <?php
 session_start();
 include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/operacionesUsuario.php";
+
+crearTablaPersona();
+crearTablaUsuario();
+crearTablaInvitado();
 $id = $nombre = $email = $telefono = $pass = $pass2 = $genero = $fecha = "";
 $idErr = $nombreErr = $emailErr = $telefonoErr = $passErr = $pass2Err = $generoErr = $fechaErr = "";
 $errores = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validaciones (las mismas que ya tienes)
+   
     if (!empty($_POST["id"])) {
         $id = $_POST["id"];
     } else {
@@ -76,18 +79,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
-    // Si no hay errores, registrar al usuario en la base de datos
+    // Si no hay errores, registrar al usuario
     if (!$errores) {
-        try {
-            crearTablaPersona();
-            
+        if (registrarUsuario($id, $nombre, $email, $telefono, $pass, $genero, $fecha)) {
             echo "<p>Registro exitoso. Bienvenido, $nombre.</p>";
-        } catch (Exception $e) {
-            echo "<p>Error al registrar: " . $e->getMessage() . "</p>";
+        } else {
+            echo "<p>Error al registrar. Inténtalo de nuevo más tarde.</p>";
         }
     }
 }
 ?>
+
+
 <?php include_once "./views/menu.php"; ?>
 <!DOCTYPE html>
 <html lang="en">

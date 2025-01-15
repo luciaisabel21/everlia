@@ -1,7 +1,7 @@
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.php";
-include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesClase.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesClases.php";
 // Inserción de usuario con contraseña hasheada
 
 
@@ -52,6 +52,8 @@ function obtenerUsuarioPorId($id)
     $c->close();
 }
 
+
+
 function iniciarSesion($email, $contraseña)
 {
     $c = conectar();
@@ -76,7 +78,10 @@ function iniciarSesion($email, $contraseña)
     $c->close();
 }
 
-function añadirInvitado($usuarioId, $invitadoId, $nombre, $email, $telefono, $relacion)
+
+//funciones invitados
+
+function añadirInvitado($listaId, $invitadoId, $nombre, $email, $telefono, $relacion)
 {
     $c = conectar();
 
@@ -110,7 +115,27 @@ function eliminarInvitado($invitadoId)
     $c->close();
 }
 
-//funciones lista boda
+function obtenerInvitadosPorLista($listaId) {
+    $c = conectar();
+
+    $sql = $c->prepare("SELECT p.id, p.nombre, p.email, i.relacion 
+                        FROM persona p 
+                        JOIN invitado i ON p.id = i.id 
+                        WHERE i.lista_id = ?");
+    $sql->bind_param("s", $listaId);
+    $sql->execute();
+    $resultado = $sql->get_result();
+
+    $invitados = [];
+    while ($fila = $resultado->fetch_assoc()) {
+        $invitados[] = $fila;
+    }
+
+    $c->close();
+    return $invitados;
+}
+
+//FUNCIONES LISTA BODA
 // Inserta una nueva lista de bodas para el usuario.
 function crearListaBoda($usuarioId, $nombreLista) {
     $datos = [
@@ -127,11 +152,30 @@ function obtenerListasPorUsuario($usuarioId) {
     return seleccionarPorCriterio('lista_boda', ['usuario_id' => $usuarioId]);
 }
 
+//Actualizar el nombre de una lista de bodas
+
+function modificarListaBoda($listaId, $nuevoNombre) {
+    $c = conectar();
+
+    $sql = $c->prepare("UPDATE lista_boda SET nombre_lista = ? WHERE id = ?");
+    $sql->bind_param("ss", $nuevoNombre, $listaId);
+
+    if ($sql->execute()) {
+        $sql->close();
+        $c->close();
+        return true;
+    } else {
+        $sql->close();
+        $c->close();
+        return false;
+    }
+}
+
 //Elimina una lista de bodas.
 function eliminarListaBoda($listaId) {
     return eliminarElemento('lista_boda', $listaId);
 }
-//funciones regalos en lista
+//funciones REGALOS en lista
 
 //añado regalos a la lista
 function añadirRegaloALista($listaId, $regaloId, $nombre, $descripcion, $precio, $urlProducto)

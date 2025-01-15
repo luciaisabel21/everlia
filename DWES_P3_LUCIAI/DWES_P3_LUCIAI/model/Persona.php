@@ -3,16 +3,18 @@
 abstract class Persona {
 	private $id;
 	private $nombre;
-	private $email;
 	private $telefono;
-    private String $contraseña;
+    private $tipo;
+    private $genero;
+    
 
-    function __construct($id, $nombre, $email, $telefono, $contraseña) {
+    function __construct($id, $nombre, $telefono, $tipo, $genero) {
     	$this->id = $id;
     	$this->nombre = $nombre;
-    	$this->email = $email;
     	$this->telefono = $telefono;
-        $this->contraseña = $contraseña;
+        $this->tipo = $tipo;
+        $this->genero = $genero;
+        
 	}
 
 	abstract public function registrarse();
@@ -58,25 +60,6 @@ abstract class Persona {
         return $this;
     }
 
-	/**
-	 * Get the value of email
-	 */ 
-	public function getEmail()
-	{
-		return $this->email;
-	}
-
-	/**
-	 * Set the value of email
-	 *
-	 * @return  self
-	 */ 
-	public function setEmail($email)
-	{
-		$this->email = $email;
-
-		return $this;
-	}
 
 	/**
 	 * Get the value of telefono
@@ -98,22 +81,43 @@ abstract class Persona {
 		return $this;
 	}
 
+
     /**
-     * Get the value of contraseña
+     * Get the value of tipo
      */ 
-    public function getContraseña()
+    public function getTipo()
     {
-        return $this->contraseña;
+        return $this->tipo;
     }
 
     /**
-     * Set the value of contraseña
+     * Set the value of tipo
      *
      * @return  self
      */ 
-    public function setContraseña($contraseña)
+    public function setTipo($tipo)
     {
-        $this->contraseña = $contraseña;
+        $this->tipo = $tipo;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of genero
+     */ 
+    public function getGenero()
+    {
+        return $this->genero;
+    }
+
+    /**
+     * Set the value of genero
+     *
+     * @return  self
+     */ 
+    public function setGenero($genero)
+    {
+        $this->genero = $genero;
 
         return $this;
     }
