@@ -60,9 +60,9 @@ if (!$errores) {
 
             // Redirigir según el tipo de usuario
             if ($persona["tipo"] == "usuario") {
-                header("Location: gestionar_listas.php"); // Redirigir a la página de lista de bodas
+                header("Location: index.php"); // Redirigir a index.php
             } else if ($persona["tipo"] == "invitado") {
-                header("Location: ver_listas.php"); // Redirigir a la vista de listas
+                header("Location: index.php"); // Redirigir a index.php
             }
             exit();
         } else {

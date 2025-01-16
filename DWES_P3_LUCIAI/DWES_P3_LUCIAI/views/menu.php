@@ -30,9 +30,9 @@
                     <?php endif; ?>
                     <!-- Opciones comunes para usuarios logueados -->
                     <li class="nav-item"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#cart">Carrito</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#shop">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#trips">Viajes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/carrito.php">Carrito</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/productos.php">Productos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/viajes.php">Viajes</a></li>
                 <?php else: ?>
                     <!-- Opciones para usuarios no logueados -->
                     <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/login.php">Iniciar Sesión</a></li>

@@ -79,7 +79,7 @@ function iniciarSesion($email, $contraseña)
 }
 
 
-//funciones invitados
+//FUNCIONES INVITADOS ##########################################################
 
 function añadirInvitado($listaId, $invitadoId, $nombre, $email, $telefono, $relacion)
 {
@@ -135,7 +135,12 @@ function obtenerInvitadosPorLista($listaId) {
     return $invitados;
 }
 
-//FUNCIONES LISTA BODA
+
+
+//FUNCIONES LISTA BODA#################################################################
+
+
+
 // Inserta una nueva lista de bodas para el usuario.
 function crearListaBoda($usuarioId, $nombreLista) {
     $datos = [
@@ -171,11 +176,16 @@ function modificarListaBoda($listaId, $nuevoNombre) {
     }
 }
 
+// Devuelve todas las listas de bodas disponibles en la base de datos.
+function obtenerTodasLasListas() {
+    return seleccionarTodo('lista_boda');
+}
+
 //Elimina una lista de bodas.
 function eliminarListaBoda($listaId) {
     return eliminarElemento('lista_boda', $listaId);
 }
-//funciones REGALOS en lista
+//REGALOS FUNCIONES ##########################################################
 
 //añado regalos a la lista
 function añadirRegaloALista($listaId, $regaloId, $nombre, $descripcion, $precio, $urlProducto)
@@ -196,6 +206,88 @@ function obtenerRegalosPorLista($listaId) {
 //Elimina un regalo específico de una lista.
 function eliminarRegaloDeLista($regaloId) {
     return eliminarElemento('regalo', $regaloId);
+}
+//Actualiza el campo comprado de un regalo para indicar que ha sido adquirido.
+function marcarRegaloComoComprado($regaloId) {
+    return modificarElemento('regalo', $regaloId, ['comprado' => true]);
+}
+
+
+
+//CARRITO FUNCIONES ####################################################
+
+function crearCarrito($usuarioId) {
+    $c = conectar();
+
+    $sql = $c->prepare("INSERT INTO carrito (usuario_id) VALUES (?)");
+    $sql->bind_param("s", $usuarioId);
+    $sql->execute();
+
+    // Recupera el ID del carrito recién creado
+    $carritoId = $c->insert_id;
+    $c->close();
+    return $carritoId; // Retorna el ID generado automáticamente
+}
+
+function agregarRegaloAlCarrito($carritoId, $regaloId) {
+    $c = conectar();
+
+    $sql = $c->prepare("INSERT INTO carrito_producto (carrito_id, producto_id, cantidad) VALUES (?, ?, 1)");
+    $sql->bind_param("ss", $carritoId, $regaloId);
+    $sql->execute();
+
+    $c->close();
+}
+
+function obtenerRegalosDelCarrito($carritoId) {
+    $c = conectar();
+
+    $sql = $c->prepare("SELECT r.id, r.nombre, r.descripcion, r.precio 
+                        FROM carrito_producto cp
+                        JOIN regalo r ON cp.producto_id = r.id
+                        WHERE cp.carrito_id = ?");
+    $sql->bind_param("s", $carritoId);
+    $sql->execute();
+    $resultado = $sql->get_result();
+
+    $regalos = [];
+    while ($fila = $resultado->fetch_assoc()) {
+        $regalos[] = $fila;
+    }
+
+    $c->close();
+    return $regalos;
+}
+
+function finalizarCompra($carritoId) {
+    $c = conectar();
+
+    // Obtener los regalos del carrito
+    $regalos = obtenerRegalosDelCarrito($carritoId);
+
+    // Marcar cada regalo como comprado
+    foreach ($regalos as $regalo) {
+        $sql = $c->prepare("UPDATE regalo SET comprado = 1 WHERE id = ?");
+        $sql->bind_param("s", $regalo["id"]);
+        $sql->execute();
+    }
+
+    // Vaciar el carrito
+    $sql = $c->prepare("DELETE FROM carrito_producto WHERE carrito_id = ?");
+    $sql->bind_param("s", $carritoId);
+    $sql->execute();
+
+    $c->close();
+}
+
+function vaciarCarrito($carritoId) {
+    $c = conectar();
+
+    $sql = $c->prepare("DELETE FROM carrito_producto WHERE carrito_id = ?");
+    $sql->bind_param("s", $carritoId);
+    $sql->execute();
+
+    $c->close();
 }
 
 ?>

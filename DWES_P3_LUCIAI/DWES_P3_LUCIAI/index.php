@@ -16,11 +16,9 @@ session_start();
     <!-- Menú dinámico -->
     <?php include_once "./views/menu.php"; ?>
 
-    <!-- Aquí iría el contenido principal de tu página -->
+    
     <main>
-        <!-- Copia aquí el contenido HTML de tu archivo original -->
-   
-
+       
   <!-- seccion 1 -->
   <div class="seccion1">
     <div class="text-center">
@@ -42,7 +40,7 @@ session_start();
             <div class="card-body">
               <h5 class="card-title">Decoración </h5>
               <p class="card-text">Decora a tu gusto tu gran dia</p>
-              <a href="#" class="btn btn-custom">Añadir al carrito</a>
+              <a href="./productos.php" class="btn btn-custom">Comprar </a>
             </div>
           </div>
         </div>
@@ -52,7 +50,7 @@ session_start();
             <div class="card-body">
               <h5 class="card-title">Vestidos y Trajes</h5>
               <p class="card-text">Elija el vestido que mejor se adapte a ti</p>
-              <a href="#" class="btn btn-custom">Añadir al carrito</a>
+              <a href="./productos.php" class="btn btn-custom">Comprar</a>
             </div>
           </div>
         </div>
@@ -62,7 +60,7 @@ session_start();
             <div class="card-body">
               <h5 class="card-title">Ramos de flores</h5>
               <p class="card-text"> Elija entre nuestra amplia variedad de flores y colores</p>
-              <a href="#" class="btn btn-custom">Añadir al carrito</a>
+              <a href="./productos.php" class="btn btn-custom">Comprar</a>
             </div>
           </div>
         </div>

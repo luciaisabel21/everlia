@@ -1,3 +1,4 @@
+
 <?php
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.php";
@@ -73,16 +74,5 @@ function eliminarElemento($tabla, $id)
     return $conexion->query($sql);
 }
 
-//funciones para invitados
-//funcion para que el invitado puede ver las listas de bodas
-// Devuelve todas las listas de bodas disponibles en la base de datos.
-function obtenerTodasLasListas() {
-    return seleccionarTodo('lista_boda');
-}
-
-//Actualiza el campo comprado de un regalo para indicar que ha sido adquirido.
-function marcarRegaloComoComprado($regaloId) {
-    return modificarElemento('regalo', $regaloId, ['comprado' => true]);
-}
 
 ?>

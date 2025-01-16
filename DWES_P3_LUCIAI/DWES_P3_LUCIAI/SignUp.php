@@ -5,19 +5,22 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.p
 crearTablaPersona();
 crearTablaUsuario();
 crearTablaInvitado();
-$id = $nombre = $email = $telefono = $pass = $pass2 = $genero = $fecha = "";
-$idErr = $nombreErr = $emailErr = $telefonoErr = $passErr = $pass2Err = $generoErr = $fechaErr = "";
+// Inicializar variables
+$id = $nombre = $email = $telefono = $pass = $pass2 = $genero = "";
+$IdErr = $nombreErr = $emailErr = $telefonoErr = $passErr = $pass2Err = $generoErr = "";
 $errores = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   
-    if (!empty($_POST["id"])) {
+     // Validación de id
+     if (!empty($_POST["id"])) {
         $id = $_POST["id"];
     } else {
         $idErr = "El id es obligatorio";
         $errores = true;
     }
 
+
+    // Validación de nombre
     if (!empty($_POST["nombre"])) {
         $nombre = $_POST["nombre"];
     } else {
@@ -25,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
+    // Validación de email
     if (!empty($_POST["email"])) {
         $email = $_POST["email"];
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -36,10 +40,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
+    // Validación de teléfono
     if (!empty($_POST["telefono"])) {
         $telefono = $_POST["telefono"];
         if (!preg_match("/^[0-9]{9}$/", $telefono)) {
-            $telefonoErr = "El teléfono debe contener 10 dígitos";
+            $telefonoErr = "El teléfono debe contener 9 dígitos";
             $errores = true;
         }
     } else {
@@ -47,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
+    // Validación de contraseña
     if (!empty($_POST["pass"])) {
         $pass = $_POST["pass"];
     } else {
@@ -54,6 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
+    // Validación de repetir contraseña
     if (!empty($_POST["pass2"])) {
         $pass2 = $_POST["pass2"];
         if ($pass !== $pass2) {
@@ -65,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
+    // Validación de género
     if (!empty($_POST["genero"])) {
         $genero = $_POST["genero"];
     } else {
@@ -72,16 +80,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
-    if (!empty($_POST["fecha"])) {
-        $fecha = $_POST["fecha"];
-    } else {
-        $fechaErr = "La fecha de nacimiento es obligatoria";
-        $errores = true;
-    }
-
     // Si no hay errores, registrar al usuario
     if (!$errores) {
-        if (registrarUsuario($id, $nombre, $email, $telefono, $pass, $genero, $fecha)) {
+        if (registrarUsuario($id, $nombre, $email, $telefono, $pass, $genero)) {
             echo "<p>Registro exitoso. Bienvenido, $nombre.</p>";
         } else {
             echo "<p>Error al registrar. Inténtalo de nuevo más tarde.</p>";
@@ -89,7 +90,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 
 <?php include_once "./views/menu.php"; ?>
 <!DOCTYPE html>
@@ -105,7 +105,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="POST" action="">
             <fieldset>
                 <legend>SignUp</legend>
-                <!-- Id -->
+
+                <!-- ID -->
                 <label>Id *: </label>
                 <input type="text" name="id" value="<?php echo htmlspecialchars($id); ?>"><br>
                 <?php if (!empty($idErr)) echo "<label class='error'>$idErr</label>"; ?><br>
@@ -137,16 +138,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <!-- Género -->
                 <label>Género *:</label><br>
-                <input type="radio" name="genero" value="hombre" <?php if ($genero == "hombre") echo "checked"; ?>>Hombre<br>
-                <input type="radio" name="genero" value="mujer" <?php if ($genero == "mujer") echo "checked"; ?>>Mujer<br>
-                <input type="radio" name="genero" value="otro" <?php if ($genero == "otro") echo "checked"; ?>>Otro<br>
+                <input type="radio" name="genero" value="Masculino" <?php if ($genero == "Masculino") echo "checked"; ?>>Masculino<br>
+                <input type="radio" name="genero" value="Femenino" <?php if ($genero == "Femenino") echo "checked"; ?>>Femenino<br>
+                <input type="radio" name="genero" value="Otro" <?php if ($genero == "Otro") echo "checked"; ?>>Otro<br>
                 <?php if (!empty($generoErr)) echo "<label class='error'>$generoErr</label>"; ?><br>
 
-                <!-- Fecha -->
-                <label>Fecha de nacimiento *: </label>
-                <input type="date" name="fecha" value="<?php echo htmlspecialchars($fecha); ?>"><br>
-                <?php if (!empty($fechaErr)) echo "<label class='error'>$fechaErr</label>"; ?><br>
-
+        
                 <input type="submit" name="enviar" value="Registrarse">
             </fieldset>
         </form>
