@@ -9,14 +9,7 @@ class Invitado extends Persona {
     	$this->relacion = $relacion;
     	$this->fechaInvitacion = $fechaInvitacion;
 	}
-    public function registrarse() {
-
-	}
-
-	public function iniciarSesion() {
-    	
-	}
-
+  
 }
 
 

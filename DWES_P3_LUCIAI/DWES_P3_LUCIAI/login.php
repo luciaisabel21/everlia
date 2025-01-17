@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.php";
+include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/operacionesUsuario.php";
+
 // Variables para guardar los valores introducidos
 $email = $pass = $rol ="";
 $emailErr = $passErr = $rolErr = "";
@@ -26,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $passErr = "La contraseña es obligatoria";
         $errores = true;
     }
+
     // Validación del rol
     if (!empty($_POST["rol"])) {
         $rol = $_POST["rol"];
@@ -34,50 +37,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $errores = true;
     }
 
-    /*Lo de abajo: Consulta el campo tipo en la tabla persona.
-Guarda el tipo en la sesión ($_SESSION["usuario_tipo"]).
-Redirige al usuario según su tipo:
-Los usuarios van a la página para gestionar su lista de bodas.
-Los invitados van a la página para ver las listas y comprar regalos. */
-if (!$errores) {
-    $conexion = conectar();
+    // Si no hay errores, realizar la autenticación
+    if (!$errores) {
+        // Llamar a la función para autenticar al usuario
+        $persona = autenticarPersona($email, $pass, $rol);
 
-    // Consultar el tipo en la tabla persona
-    $sql = "SELECT id, nombre, email, password_hash, tipo FROM persona WHERE email = ? AND tipo = ?";
-    $stmt = $conexion->prepare($sql);
-    $stmt->bind_param("ss", $email, $rol); // Filtrar también por el tipo (usuario/invitado)
-    $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    if ($resultado->num_rows == 1) {
-        $persona = $resultado->fetch_assoc();
-        if (password_verify($pass, $persona["password_hash"])) {
-            // Guardar los datos en la sesión
+        if ($persona) {
+            // Si la autenticación funciona, almacenar los datos en la sesión
             $_SESSION["usuario_id"] = $persona["id"];
             $_SESSION["usuario_nombre"] = $persona["nombre"];
             $_SESSION["usuario_email"] = $persona["email"];
-            $_SESSION["usuario_tipo"] = $persona["tipo"]; // 'usuario' o 'invitado'
+            $_SESSION["usuario_tipo"] = $persona["tipo"]; // usuario o invitado
 
             // Redirigir según el tipo de usuario
             if ($persona["tipo"] == "usuario") {
-                header("Location: index.php"); // Redirigir a index.php
+                header("Location: index.php");
             } else if ($persona["tipo"] == "invitado") {
-                header("Location: index.php"); // Redirigir a index.php
+                header("Location: index.php");
             }
             exit();
         } else {
-            $passErr = "Email o contraseña incorrectos.";
+            $passErr = "Email o contraseña incorrectos o rol no coincide.";
         }
-    } else {
-        $passErr = "Email o contraseña incorrectos o rol no coincide.";
     }
-
-    $stmt->close();
-    $conexion->close();
-    
 }
-}
-
 ?>
 
 <?php include_once "./views/menu.php"; ?>

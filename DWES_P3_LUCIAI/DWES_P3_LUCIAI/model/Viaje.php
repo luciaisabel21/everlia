@@ -9,8 +9,6 @@ class Viaje extends Venta {
     	$this->fechaDisponible = $fechaDisponible;
 	}
 
-	public function actualizarPrecio($nuevoPrecio) {
-    	$this->precio = $nuevoPrecio;
-	}
+
 }
 ?>

@@ -11,8 +11,6 @@ abstract class Venta {
     	$this->descripcion = $descripcion;
 	}
 
-	abstract public function actualizarPrecio($nuevoPrecio);
-
 
 }
 

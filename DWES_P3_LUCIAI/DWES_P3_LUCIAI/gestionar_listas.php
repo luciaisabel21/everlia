@@ -39,6 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Gestionar Listas</title>
 </head>
 <body>
+    <!-- Menú dinámico -->
+    <?php include_once "./views/menu.php"; ?>
+
     <h1>Mis Listas de Bodas</h1>
     <form method="POST">
         <label>Nombre de la lista:</label>
@@ -49,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php foreach ($listas as $lista): ?>
             <li>
                 <?php echo htmlspecialchars($lista["nombre_lista"]); ?>
+                
                 <form method="POST" style="display: inline;">
                     <input type="hidden" name="modificar_lista_id" value="<?php echo $lista["id"]; ?>">
                     <input type="text" name="nuevo_nombre" placeholder="Nuevo nombre" required>
@@ -58,6 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <input type="hidden" name="eliminar_lista_id" value="<?php echo $lista["id"]; ?>">
                     <button type="submit">Eliminar</button>
                 </form>
+
+                 <!-- Enlace para gestionar regalos -->
+            <a href="gestionar_regalos.php?lista_id=<?php echo $lista["id"]; ?>">Añadir Regalos</a>
             </li>
         <?php endforeach; ?>
     </ul>

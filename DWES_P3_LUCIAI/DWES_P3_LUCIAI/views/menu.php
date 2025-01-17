@@ -28,13 +28,13 @@
                         <!-- Opciones para invitados -->
                         <li class="nav-item"><a class="nav-link" href="ver_listas.php">Ver Listas</a></li>
                     <?php endif; ?>
-                    <!-- Opciones comunes para usuarios logueados -->
+                    <!-- si el usuario se ha  logueado -->
                     <li class="nav-item"><a class="nav-link" href="logout.php">Cerrar Sesión</a></li>
                     <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/carrito.php">Carrito</a></li>
                     <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/productos.php">Productos</a></li>
                     <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/viajes.php">Viajes</a></li>
                 <?php else: ?>
-                    <!-- Opciones para usuarios no logueados -->
+                    <!-- si el usuario no se ha logueado -->
                     <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/login.php">Iniciar Sesión</a></li>
                     <li class="nav-item"><a class="nav-link" href="/DWES_P3_LUCIAI/SignUp.php">Registrarse</a></li>
                 <?php endif; ?>

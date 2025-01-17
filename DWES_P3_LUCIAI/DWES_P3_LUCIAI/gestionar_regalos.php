@@ -1,8 +1,13 @@
 <?php
 session_start();
 
-crearTablaRegalo();
+
+
+include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.php";
 include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/operacionesUsuario.php";
+
+crearTablaListaBoda();
+crearTablaRegalo();
 
 
 // Verificar que el usuario esté autenticado y sea de tipo "usuario"
@@ -74,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (!$errores) {
             $regaloId = uniqid(); // Generar un ID único para el regalo
             añadirRegaloALista($listaId, $regaloId, $nombre, $descripcion, $precio, $urlProducto);
-            header("Location: gestionar_regalos.php?lista_id=$listaId");
+            header("Location: gestionar_regalos.php?lista_boda_id=$listaId");
             exit();
         }
     }
@@ -83,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["eliminar_regalo_id"])) {
         $regaloId = $_POST["eliminar_regalo_id"];
         eliminarRegaloDeLista($regaloId);
-        header("Location: gestionar_regalos.php?lista_id=$listaId");
+        header("Location: gestionar_regalos.php?lista_boda_id=$listaId");
         exit();
     }
 }
@@ -133,4 +138,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </ul>
 </body>
 </html>
+<?php include_once "./views/pie.php"; ?>
 <?php 

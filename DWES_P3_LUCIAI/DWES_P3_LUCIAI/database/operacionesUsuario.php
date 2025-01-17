@@ -4,7 +4,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesBD.p
 include_once $_SERVER['DOCUMENT_ROOT'] . "/DWES_P3_LUCIAI/database/funcionesClases.php";
 // Inserción de usuario con contraseña hasheada
 
-
+/*
 function insertarUsuario($id, $nombre, $email, $telefono, $pass, $genero, $fecha)
 {
     $c = conectar();
@@ -52,33 +52,37 @@ function obtenerUsuarioPorId($id)
     $c->close();
 }
 
+*/
 
+function autenticarPersona($email, $pass, $rol) {
+    $conexion = conectar();
 
-function iniciarSesion($email, $contraseña)
-{
-    $c = conectar();
+    // Consulta para verificar usuario y rol
+    $sql = "SELECT id, nombre, email, password_hash, tipo FROM persona WHERE email = ? AND tipo = ?";
+    $stmt = $conexion->prepare($sql);
+    $stmt->bind_param("ss", $email, $rol); 
+    $stmt->execute();
+    $resultado = $stmt->get_result();
 
-    // Obtener los datos del usuario
-    $sql = $c->prepare("SELECT id, contraseña FROM persona WHERE email = ?");
-    $sql->bind_param("s", $email);
-    $sql->execute();
-    $resultado = $sql->get_result();
-
-    if ($resultado->num_rows > 0) {
-        $usuario = $resultado->fetch_assoc();
-        if (password_verify($contraseña, $usuario['contraseña'])) {
-            return $usuario['id']; // Retorna el ID del usuario si las credenciales son correctas
+    if ($resultado->num_rows == 1) {
+        $persona = $resultado->fetch_assoc();
+        if (password_verify($pass, $persona["password_hash"])) {
+            // Datos correctos, devolver información del usuario
+            return $persona;
         } else {
-            return false; // Contraseña incorrecta
+            // Contraseña incorrecta
+            return false;
         }
     } else {
-        return false; // Usuario no encontrado
+        // No se encontró el usuario o el rol no coincide
+        return false;
     }
 
-    $c->close();
+    $stmt->close();
+    $conexion->close();
 }
 
-
+/*
 //FUNCIONES INVITADOS ##########################################################
 
 function añadirInvitado($listaId, $invitadoId, $nombre, $email, $telefono, $relacion)
@@ -135,16 +139,16 @@ function obtenerInvitadosPorLista($listaId) {
     return $invitados;
 }
 
-
+*/
 
 //FUNCIONES LISTA BODA#################################################################
 
 
 
 // Inserta una nueva lista de bodas para el usuario.
+//SI SE UTILIZA
 function crearListaBoda($usuarioId, $nombreLista) {
     $datos = [
-        'id' => uniqid(), // Generar un ID único para la lista
         'usuario_id' => $usuarioId,
         'nombre_lista' => $nombreLista,
         'fecha_creacion' => date('Y-m-d H:i:s')
@@ -152,13 +156,13 @@ function crearListaBoda($usuarioId, $nombreLista) {
     return insertarElemento('lista_boda', $datos);
 }
 
-// Devuelve todas las listas de bodas de un usuario
+// Devuelve todas las listas de bodas de un usuario 
 function obtenerListasPorUsuario($usuarioId) {
     return seleccionarPorCriterio('lista_boda', ['usuario_id' => $usuarioId]);
 }
 
 //Actualizar el nombre de una lista de bodas
-
+//SI SE UTILIZA
 function modificarListaBoda($listaId, $nuevoNombre) {
     $c = conectar();
 
@@ -181,6 +185,7 @@ function obtenerTodasLasListas() {
     return seleccionarTodo('lista_boda');
 }
 
+//SI SE UTILIZA
 //Elimina una lista de bodas.
 function eliminarListaBoda($listaId) {
     return eliminarElemento('lista_boda', $listaId);
@@ -192,8 +197,8 @@ function añadirRegaloALista($listaId, $regaloId, $nombre, $descripcion, $precio
 {
     $c = conectar();
 
-    $sql = $c->prepare("INSERT INTO regalo (id, lista_boda_id, nombre, descripcion, precio, url_producto) VALUES (?, ?, ?, ?, ?, ?)");
-    $sql->bind_param("ssssds", $regaloId, $listaId, $nombre, $descripcion, $precio, $urlProducto);
+    $sql = $c->prepare("INSERT INTO regalo (lista_boda_id, nombre, descripcion, precio, url_producto) VALUES (?, ?, ?, ?, ?)");
+    $sql->bind_param("issss", $listaId, $nombre, $descripcion, $precio, $urlProducto);
     $sql->execute();
 
     $c->close();

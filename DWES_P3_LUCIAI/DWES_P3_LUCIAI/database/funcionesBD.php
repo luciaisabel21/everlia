@@ -95,7 +95,7 @@ function crearTablaInvitado() {
         nombre VARCHAR(100),
         descripcion TEXT,
         precio DECIMAL(10, 2),
-        url_producto VARCHAR(255),
+        url_producto VARCHAR(1024),
         comprado BOOLEAN DEFAULT FALSE,
         FOREIGN KEY (lista_boda_id) REFERENCES lista_boda(id)
     )";
@@ -137,7 +137,6 @@ function crearTablaInvitado() {
     $sql = "CREATE TABLE IF NOT EXISTS producto (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nombre VARCHAR(100),
-        categoria VARCHAR(50),
         cantidad INT,
         FOREIGN KEY (id) REFERENCES venta(id)
     )";

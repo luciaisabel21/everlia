@@ -17,8 +17,6 @@ abstract class Persona {
         
 	}
 
-	abstract public function registrarse();
-	abstract public function iniciarSesion();
 
     /**
      * Get the value of id
