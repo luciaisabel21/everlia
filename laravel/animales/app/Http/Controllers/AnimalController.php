@@ -12,8 +12,10 @@ class AnimalController extends Controller
      */
     public function index()
     {
-        //
-        return "esto es el index :) ";
+        //1. pido al modelo que bisque todos los animales en la BD
+        $animales = Animal::all(); 
+        //2. Creo una bista con dichos animales
+        return view('animal.index', compact ('animales'));
     }
 
     /**
@@ -45,7 +47,7 @@ class AnimalController extends Controller
      */
     public function edit(Animal $animal)
     {
-        //
+        return view('animal.edit', compact('animal'));
     }
 
     /**

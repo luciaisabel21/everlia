@@ -17,4 +17,4 @@ Route::get("user/{id}", function (string $id) {
 
 
 
-//Route::resource("/animal", AnimalController::class);
+Route::resource("/animal", AnimalController::class);
