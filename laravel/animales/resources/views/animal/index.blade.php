@@ -10,15 +10,8 @@
           crossorigin="anonymous">
 </head>
 <body>
-    <!-- Barra de menú -->
-    <ul class="nav">
-        <li class="nav-item">
-            <a class="nav-link active" href="{{ route('animal.index') }}">Animales</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('animal.create') }}">Create animal</a>
-        </li>
-    </ul>
+    
+@include('navbar');
 
     <!-- Contenido (tarjetas con los animales) -->
     <div class="container mt-5">
@@ -37,16 +30,19 @@
                         <div class="card-footer">
                             <div class="row">
                                 <div class="col-sm">
-                                    <a href="{{ route('animal.edit', $animal->id) }}" 
+                                    <a href="{{ route('animal.edit', $animal) }}" 
                                        class="btn btn-primary btn-sm">Editar</a>
                                 </div>
                                 <div class="col-sm">
-                                    <form action="{{ route('animal.destroy', $animal->id) }}" 
+                                    <form action="{{ route('animal.destroy', $animal) }}" 
                                           method="post">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                                     </form>
+                                </div>
+                                <div class="col-sm">
+                                    <a href="{{ route('animal.show', $animal) }}" class="btn btn-success btn-sm">Show</a>
                                 </div>
                             </div>
                         </div>

@@ -23,7 +23,8 @@ class AnimalController extends Controller
      */
     public function create()
     {
-        //
+        //aquí suministro una vista con un formulario en blanco de creación
+        return view('animal.create');
     }
 
     /**
@@ -31,7 +32,11 @@ class AnimalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //aquí guardo el modelo en la BD
+        Animal::create($request->all());
+        
+        //redirijo a la vista de index
+        return redirect()->route('animal.index')->with('success', value: 'Animal creado con éxito');
     }
 
     /**
@@ -39,13 +44,13 @@ class AnimalController extends Controller
      */
     public function show(Animal $animal)
     {
-        //
+        return view('animal.show', compact('animal'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Animal $animal)
+    public function edit(Animal $animal) //el edit te muestra la vista
     {
         return view('animal.edit', compact('animal'));
     }
@@ -53,9 +58,12 @@ class AnimalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Animal $animal)
+    public function update(Request $request, Animal $animal) //el update te actualiza la BD
+    //request contiene los datos del formulario
     {
-        //
+        $animal->update($request->all());
+        //reenviamos al index
+        return redirect()->route('animal.index')->with('success', 'Animal actualizado con exito');
     }
 
     /**
@@ -63,6 +71,9 @@ class AnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
-        //
+        //para eliminar un registro de la BD
+        $animal->delete();
+        //reenviamos al index
+        return redirect()->route('animal.index')->with('success', 'Animal eliminado con exito');
     }
 }
