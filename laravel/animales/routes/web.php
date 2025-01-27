@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnimalController;
+use App\Http\Controllers\VetController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,3 +19,4 @@ Route::get("user/{id}", function (string $id) {
 
 
 Route::resource("/animal", AnimalController::class);
+Route::resource("/vet", VetController::class);
