@@ -20,3 +20,7 @@ Route::get("user/{id}", function (string $id) {
 
 Route::resource("/animal", AnimalController::class);
 Route::resource("/vet", VetController::class);
+
+//Esta será una ruta para pruebas:
+//Le digo que cuando visite mi url/veterinarios ejecutará el método mostrar de VetController
+Route::get('/veterinarios', [VetController::class, 'mostrar'])->name("mirutita");

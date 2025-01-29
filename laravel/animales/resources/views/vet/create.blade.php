@@ -13,9 +13,19 @@
     
 @include('navbar');
 
+<!-- Mostrar los posbiles errores al rellenar el formulario -->
+
+@if ($errors->any())
+@foreach ($errors->all() as $error)
+<div class="alert alert-danger" role="alert">
+  {{ $error }}
+  </div>
+  @endforeach
+@endif 
+
     <!-- Contenido (formulario de veterinario) -->
      <div class="container">
-    <form action="" method="post">
+    <form action={{route('vet.store')}} method="post">
         @csrf
         @method('POST')
   <div class="form-group">
@@ -31,7 +41,7 @@
     <input type="text" class="form-control" name="phone">
   </div>
   <div class="form-group">
-    <label for="address"><Address></Address></label>
+    <label for="address">Address</label>
     <input type="text" class="form-control" name="addres">
   </div>
   
