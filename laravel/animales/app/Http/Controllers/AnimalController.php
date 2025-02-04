@@ -75,8 +75,9 @@ class AnimalController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Animal $animal) //el update te actualiza la BD
-    //request contiene los datos del formulario
+    
     {
+        //request contiene los datos del formulario
         $animal->update($request->all());
         //reenviamos al index
         return redirect()->route('animal.index')->with('success', 'Animal actualizado con exito');
@@ -87,6 +88,9 @@ class AnimalController extends Controller
      */
     public function destroy(Animal $animal)
     {
+        //primero tengo que eliminar el propietario:
+        $animal->owner->delete();
+
         //para eliminar un registro de la BD
         $animal->delete();
         //reenviamos al index
